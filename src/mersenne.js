@@ -60,11 +60,11 @@ function MersenneTwister19937()
 	//c//#define MATRIX_A 0x9908b0dfUL   /* constant vector a */
 	//c//#define UPPER_MASK 0x80000000UL /* most significant w-r bits */
 	//c//#define LOWER_MASK 0x7fffffffUL /* least significant r bits */
-	N = 624;
-	M = 397;
-	MATRIX_A = 0x9908b0df;   /* constant vector a */
-	UPPER_MASK = 0x80000000; /* most significant w-r bits */
-	LOWER_MASK = 0x7fffffff; /* least significant r bits */
+	var N = 624;
+	var M = 397;
+	var MATRIX_A = 0x9908b0df;   /* constant vector a */
+	var UPPER_MASK = 0x80000000; /* most significant w-r bits */
+	var LOWER_MASK = 0x7fffffff; /* least significant r bits */
 	//c//static unsigned long mt[N]; /* the array for the state vector  */
 	//c//static int mti=N+1; /* mti==N+1 means mt[N] is not initialized */
 	var mt = new Array(N);   /* the array for the state vector  */
@@ -255,34 +255,32 @@ function MersenneTwister19937()
 //  Exports: Public API
 
 //  Export the twister class
-exports.MersenneTwister19937 = MersenneTwister19937;
+export { MersenneTwister19937 };
 
 //  Export a simplified function to generate random numbers
 var gen = new MersenneTwister19937;
 gen.init_genrand((new Date).getTime() % 1000000000);
-exports.rand = function(N) {
+export function rand(N) {
     if (!N)
         {
         N = 32768;
         }
     return Math.floor(gen.genrand_real2() * N);
 }
-exports.rand_real = function () {
+export function rand_real() {
 	return gen.genrand_real2()
 }
-exports.seed = function(S) {
+export function seed(S) {
     if (typeof(S) != 'number')
         {
         throw new Error("seed(S) must take numeric argument; is " + typeof(S));
         }
     gen.init_genrand(S);
 }
-exports.seed_array = function(A) {
+export function seed_array(A) {
     if (typeof(A) != 'object')
         {
         throw new Error("seed_array(A) must take array of numbers; is " + typeof(A));
         }
     gen.init_by_array(A);
 }
-
-

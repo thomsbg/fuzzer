@@ -1,6 +1,7 @@
-const assert = require('assert');
-const util = require('util');
-const fs = require('fs');
+import assert from 'assert';
+import util from 'util';
+import fs from 'fs';
+import * as mersenne from './mersenne';
 
 // You can use this to enable debugging info in this file.
 const p = () => {}
@@ -12,37 +13,36 @@ const pi = (...args) => p(i(...args));
 // with avoiding obscure bugs caused by a rare seed.
 const seed = Math.floor(Date.now() / (1000*60*60*6));
 
-const randomReal;
+let randomReal;
 if (seed != null) {
-  const mersenne = require('./mersenne');
-
   mersenne.seed(seed);
-  randomReal = (exports.randomReal = mersenne.rand_real);
+  randomReal = mersenne.rand_real;
 } else {
-  randomReal = (exports.randomReal = Math.random);
+  randomReal = Math.random;
 }
+export { randomReal };
 
 // Generate a random int 0 <= k < n
-const randomInt = exports.randomInt = (n) => Math.floor(randomReal() * n);
+export const randomInt = (n) => Math.floor(randomReal() * n);
 
 // Return a random word from a corpus each time the method is called
-const words = fs.readFileSync(__dirname + '/jabberwocky.txt').toString().split(/\W+/);
-const randomWord = exports.randomWord = () => words[randomInt(words.length)];
+const words = fs.readFileSync(__dirname + '/../jabberwocky.txt').toString().split(/\W+/);
+export const randomWord = () => words[randomInt(words.length)];
 
 // Cross-transform function. Transform server by client and client by server. Returns
 // [server, client].
-const transformX = exports.transformX = (type, left, right) => [type.transform(left, right, 'left'), type.transform(right, left, 'right')];
+export const transformX = (type, left, right) => [type.transform(left, right, 'left'), type.transform(right, left, 'right')];
 
 // Transform a list of server ops by a list of client ops.
 // Returns [serverOps', clientOps'].
 // This is O(serverOps.length * clientOps.length)
-const transformLists = exports.transformLists = function(type, serverOps, clientOps) {
-  p(`Transforming ${i serverOps} with ${i clientOps}`)
+export function transformLists(type, serverOps, clientOps) {
+  p(`Transforming ${i(serverOps)} with ${i(clientOps)}`)
   serverOps = serverOps.map(s => {
     clientOps = clientOps.map(c => {
-      p(`X ${i s} by ${i c}`)
+      p(`X ${i(s)} by ${i(c)}`)
       [s, c_] = transformX(type, s, c);
-      p(`=> ${i s} by ${i c_}`)
+      p(`=> ${i(s)} by ${i(c_)}`)
       return c_;
     });
     return s;
@@ -278,7 +278,7 @@ const testRandomOp = function(type, genRandomOp, initialDoc) {
     p(`XF result -> ${i(s_)} x ${i(c_)}`)
     p(`applying ${i(c_)} to ${i(server.result)}`)
     s_c = c_.reduce(type.apply, clone(server.result, type));
-    p(`applying ${i s_} to ${i client.result}`)
+    p(`applying ${i(s_)} to ${i(client.result)}`)
     c_s = s_.reduce(type.apply, clone(client.result, type));
 
     checkSnapshotsEq(s_c, c_s);
@@ -327,7 +327,7 @@ const collectStats = function(type) {
 };
 
 // Run some iterations of the random op tester. Requires a random op generator for the type.
-module.exports = function(type, genRandomOp, iterations) {
+export default function(type, genRandomOp, iterations) {
   if (iterations == null) { iterations = 2000; }
   assert.ok(type.transform);
 
@@ -366,5 +366,3 @@ module.exports = function(type, genRandomOp, iterations) {
 
   return restore();
 };
-
-Object.assign(module.exports, exports);

@@ -1,13 +1,8 @@
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 // This is a simple test for the fuzzer, using a trivial OT type. The type
 // is correct - we should add tests where types are not correct get caught by
 // the fuzzer.
 
-const fuzzer = require('../lib');
+import fuzzer from '../src';
 
 // Each op is [expectedSnapshot, increment].
 const count = {};
@@ -32,10 +27,9 @@ count.compose = function(op1, op2) {
 
 const genOp = doc => [[doc, 1], doc + 1];
 
-
-describe('type count', () =>
+describe('type count', () => {
   it('should pass the randomizer tests', function() {
     this.slow(200);
-    return fuzzer(count, genOp);
-  })
-);
+    fuzzer(count, genOp);
+  });
+});
