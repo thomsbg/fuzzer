@@ -3,4 +3,4 @@ import * as fuzzer from './index';
 Object.assign(fuzzer.default, fuzzer)
 // Delete circular reference
 delete fuzzer.default.default;
-export default fuzzer.default;
+module.exports = fuzzer.default;
