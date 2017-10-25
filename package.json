@@ -1,6 +1,6 @@
 {
   "name": "@thomsbg/ot-fuzzer",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Fuzzer for operational transformation data types",
   "main": "lib/shim.js",
   "module": "src/index.js",
