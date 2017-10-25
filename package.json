@@ -1,11 +1,10 @@
 {
   "name": "ot-fuzzer",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Fuzzer for operational transformation data types",
   "main": "lib/index.js",
   "scripts": {
-    "test": "mocha test",
-    "prepublish": "coffee -cbm lib/index.coffee"
+    "test": "mocha test"
   },
   "repository": {
     "type": "git",
@@ -16,13 +15,15 @@
     "sharejs"
   ],
   "author": "Joseph Gentle <me@josephg.com>",
+  "contributors": [
+    "Blake Thomson <thomsbg@gmail.com>"
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ottypes/fuzzer/issues"
   },
   "homepage": "https://github.com/ottypes/fuzzer",
   "devDependencies": {
-    "coffee-script": "^1.7.1",
-    "mocha": "^1.20.1"
+    "mocha": "^4.0.1"
   }
 }
