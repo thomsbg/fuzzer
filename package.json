@@ -1,5 +1,5 @@
 {
-  "name": "ot-fuzzer",
+  "name": "@thomsbg/ot-fuzzer",
   "version": "2.0.0",
   "description": "Fuzzer for operational transformation data types",
   "main": "lib/index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ottypes/fuzzer.git"
+    "url": "https://github.com/thomsbg/ot-fuzzer.git"
   },
   "keywords": [
     "ot",
@@ -20,9 +20,9 @@
   ],
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ottypes/fuzzer/issues"
+    "url": "https://github.com/thomsbg/ot-fuzzer/issues"
   },
-  "homepage": "https://github.com/ottypes/fuzzer",
+  "homepage": "https://github.com/thomsbg/ot-fuzzer",
   "devDependencies": {
     "mocha": "^4.0.1"
   }
